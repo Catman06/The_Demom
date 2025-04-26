@@ -14,6 +14,7 @@ func _ready() -> void:
 	get_node("%Menu").visible = true
 	get_node("%MainMenu").visible = true
 	get_node("%Game").visible = false
+	get_node("%UI/Game").visible = false
 
 # Reset everything (to allow restart) and start the game
 signal start_game()
@@ -22,15 +23,17 @@ func _on_start() -> void:
 	get_node("%Map/Fog").tile_map_data = fog_start
 	get_node("%Map").tile_map_data = map_start
 	for goal in goals:
-		goal = false
+		goals[goal] = false
 	itemlist.clear()
 
 	# Start
 	get_node("%Game").visible = true
+	get_node("%UI/Game").visible = true
 	get_node("%Menu").visible = false
 	get_node("%MainMenu").visible = false
 	get_tree().paused = false
 	emit_signal("start_game")
+	get_node("%Camera").make_current()
 	update_goal_display()
 
 	pass # Replace with function body.

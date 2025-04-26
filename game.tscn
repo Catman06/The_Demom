@@ -59,8 +59,8 @@ shader_parameter/lod = 4.0
 [node name="Main" type="Node" node_paths=PackedStringArray("goal_display", "itemlist")]
 process_mode = 3
 script = ExtResource("1_fc0e3")
-goal_display = NodePath("Game/Game/Panel/HBoxContainer/CenterRow/GoalsDisplay")
-itemlist = NodePath("Game/Game/Panel/HBoxContainer/BottomRow/Items")
+goal_display = NodePath("UI/Game/Panel/HBoxContainer/CenterRow/GoalsDisplay")
+itemlist = NodePath("UI/Game/Panel/HBoxContainer/BottomRow/Items")
 icon_atlas = SubResource("AtlasTexture_fc0e3")
 
 [node name="Background" type="CanvasLayer" parent="."]
@@ -78,9 +78,8 @@ grow_vertical = 2
 size_flags_horizontal = 4
 color = Color(0, 0, 0, 1)
 
-[node name="Game" type="CanvasLayer" parent="."]
+[node name="Game" type="Node2D" parent="."]
 unique_name_in_owner = true
-layer = 0
 
 [node name="Player" parent="Game" node_paths=PackedStringArray("map") instance=ExtResource("2_feb5d")]
 unique_name_in_owner = true
@@ -88,7 +87,8 @@ process_mode = 1
 position = Vector2(140, 300)
 map = NodePath("../Map")
 
-[node name="Camera2D" type="Camera2D" parent="Game/Player"]
+[node name="Camera" type="Camera2D" parent="Game/Player"]
+unique_name_in_owner = true
 offset = Vector2(175, 5)
 position_smoothing_enabled = true
 position_smoothing_speed = 20.0
@@ -181,19 +181,24 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Map/Areas/Master Bedroom"]
 shape = SubResource("RectangleShape2D_215e1")
 
-[node name="Game" type="Control" parent="Game"]
+[node name="UI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 1
+
+[node name="Game" type="Control" parent="UI"]
 layout_direction = 4
 layout_mode = 3
 anchor_left = 0.694
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 0.511963
-grow_horizontal = 0
+offset_right = 0.511963
+grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="ColorRect" type="ColorRect" parent="Game/Game"]
+[node name="ColorRect" type="ColorRect" parent="UI/Game"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -204,7 +209,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0, 0, 0, 1)
 
-[node name="Panel" type="PanelContainer" parent="Game/Game"]
+[node name="Panel" type="PanelContainer" parent="UI/Game"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -213,25 +218,25 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_e2o6t")
 
-[node name="HBoxContainer" type="VBoxContainer" parent="Game/Game/Panel"]
+[node name="HBoxContainer" type="VBoxContainer" parent="UI/Game/Panel"]
 layout_mode = 2
 alignment = 1
 
-[node name="TopMargin" type="PanelContainer" parent="Game/Game/Panel/HBoxContainer"]
+[node name="TopMargin" type="PanelContainer" parent="UI/Game/Panel/HBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ryrav")
 
-[node name="TopRow" type="VBoxContainer" parent="Game/Game/Panel/HBoxContainer/TopMargin"]
+[node name="TopRow" type="VBoxContainer" parent="UI/Game/Panel/HBoxContainer/TopMargin"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LocationLabel" type="Label" parent="Game/Game/Panel/HBoxContainer/TopMargin/TopRow"]
+[node name="LocationLabel" type="Label" parent="UI/Game/Panel/HBoxContainer/TopMargin/TopRow"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
 text = "Location"
 
-[node name="LocationDisplay" type="RichTextLabel" parent="Game/Game/Panel/HBoxContainer/TopMargin/TopRow"]
+[node name="LocationDisplay" type="RichTextLabel" parent="UI/Game/Panel/HBoxContainer/TopMargin/TopRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -240,34 +245,34 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenterRow" type="VBoxContainer" parent="Game/Game/Panel/HBoxContainer"]
+[node name="CenterRow" type="VBoxContainer" parent="UI/Game/Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GoalsLabel" type="Label" parent="Game/Game/Panel/HBoxContainer/CenterRow"]
+[node name="GoalsLabel" type="Label" parent="UI/Game/Panel/HBoxContainer/CenterRow"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Goals"
 
-[node name="GoalsDisplay" type="RichTextLabel" parent="Game/Game/Panel/HBoxContainer/CenterRow"]
+[node name="GoalsDisplay" type="RichTextLabel" parent="UI/Game/Panel/HBoxContainer/CenterRow"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 fit_content = true
 
-[node name="BottomRow" type="VBoxContainer" parent="Game/Game/Panel/HBoxContainer"]
+[node name="BottomRow" type="VBoxContainer" parent="UI/Game/Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="InvLabel" type="Label" parent="Game/Game/Panel/HBoxContainer/BottomRow"]
+[node name="InvLabel" type="Label" parent="UI/Game/Panel/HBoxContainer/BottomRow"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Inventory"
 
-[node name="Items" type="ItemList" parent="Game/Game/Panel/HBoxContainer/BottomRow"]
+[node name="Items" type="ItemList" parent="UI/Game/Panel/HBoxContainer/BottomRow"]
 unique_name_in_owner = true
 clip_contents = false
 layout_mode = 2
@@ -275,10 +280,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 allow_search = false
 auto_height = true
-
-[node name="UI" type="CanvasLayer" parent="."]
-unique_name_in_owner = true
-process_mode = 1
 
 [node name="Menu" type="Control" parent="UI"]
 unique_name_in_owner = true
