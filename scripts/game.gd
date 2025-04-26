@@ -7,40 +7,39 @@ extends Node
 @export var item_display_name: Dictionary = {"book":"Demonology Book","photo":"Family Photo","necklace":"Grandmother's Necklace","mirror":"Hand Mirror", "salt":"Salt", "tenderizer":"Meat Tenderizer"}
 @export var icon_atlas: AtlasTexture = null
 
-@onready var fog_start: PackedByteArray = get_node("%Map/Fog").tile_map_data
-@onready var map_start: PackedByteArray = get_node("%Map").tile_map_data
+@onready var fog_start: PackedByteArray =$%Map/Fog.tile_map_data
+@onready var map_start: PackedByteArray =$%Map.tile_map_data
 
 func _ready() -> void:
 	get_tree().paused = true
-	get_node("%Menu").visible = true
-	get_node("%MainMenu").visible = true
-	get_node("%Game").visible = false
-	get_node("%UI/Game").visible = false
+	$%Menu.visible = true
+	$%MainMenu.visible = true
+	$%Game.visible = false
+	$%UI/Game.visible = false
 
 # Reset everything (to allow restart) and start the game
 signal start_game()
 func _on_start() -> void:
 	# Reset
-	get_node("%Map/Fog").tile_map_data = fog_start
-	get_node("%Map").tile_map_data = map_start
+	$%Map/Fog.tile_map_data = fog_start
+	$%Map.tile_map_data = map_start
 	for goal in goals:
 		goals[goal] = false
 	itemlist.clear()
 
 	# Start
-	get_node("%Game").visible = true
-	get_node("%UI/Game").visible = true
-	get_node("%Menu").visible = false
-	get_node("%MainMenu").visible = false
+	$%Game.visible = true
+	$%UI/Game.visible = true
+	$%Menu.visible = false
+	$%MainMenu.visible = false
 	get_tree().paused = false
 	emit_signal("start_game")
-	get_node("%Camera").make_current()
+	$%Camera.make_current()
 	update_goal_display()
 
-	pass # Replace with function body.
 # Set the shown location when the player updates it
 func _on_player_location_update(current_room:String) -> void:
-	get_node("%LocationDisplay").text = current_room
+	$%LocationDisplay.text = current_room
 
 # Update what items the player has and display it
 func _on_player_item_pickup(item:String) -> void:
@@ -79,7 +78,7 @@ func update_goal_display() -> void:
 # Either lose or win the game depending on whether or not all items have been gathered
 func _on_player_demom_touch(location) -> void:
 	if itemlist.item_count >= 6:
-		get_node("%Map").erase_cell(location)
+		$%Map.erase_cell(location)
 		goals["exorcism"] = true
 		update_goal_display()
 		winlose(true)
@@ -89,12 +88,12 @@ func _on_player_demom_touch(location) -> void:
 # Display the correct end screen message
 func winlose(win: bool) -> void:
 	if win:
-		get_node("%EndScreen").get_child(0).text = "You Win!"
+		$%EndScreen.get_child(0).text = "You Win!"
 	else:
-		get_node("%EndScreen").get_child(0).text = "You Lose"
+		$%EndScreen.get_child(0).text = "You Lose"
 	get_tree().paused = true
-	get_node("%Menu").visible = true
-	get_node("%EndScreen").visible = true
+	$%Menu.visible = true
+	$%EndScreen.visible = true
 
 # Pause the game
 func _input(event: InputEvent) -> void:
@@ -103,13 +102,13 @@ func _input(event: InputEvent) -> void:
 
 func _on_pause() -> void:
 	# If on another menu, do nothing
-	if get_node("%Menu").visible:
+	if $%Menu.visible:
 		return
 	get_tree().paused = true
-	get_node("%Menu").visible = true
-	get_node("%PauseMenu").visible = true
+	$%Menu.visible = true
+	$%PauseMenu.visible = true
 
 func _on_unpause() -> void:
 	get_tree().paused = false
-	get_node("%Menu").visible = false
-	get_node("%PauseMenu").visible = false
+	$%Menu.visible = false
+	$%PauseMenu.visible = false

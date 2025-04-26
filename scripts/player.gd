@@ -20,7 +20,7 @@ func _on_start() -> void:
 	location = Vector2i(start_x, start_y)
 	self.global_position = location * 20
 	await get_tree().create_timer(.01).timeout
-	Reveal.reveal(ray, map, get_node("%Map/Fog"))
+	Reveal.reveal(ray, map, $%Map/Fog)
 
 # Movement
 ## Enum defining possible movement directions
@@ -46,7 +46,7 @@ func move(direction: int) -> void:
 	self.global_position = location * 20
 	update_location()
 	# Reveal all that should be visible
-	Reveal.reveal(ray, map, get_node("%Map/Fog"))
+	Reveal.reveal(ray, map, $%Map/Fog)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("left"):
@@ -82,14 +82,14 @@ func _on_repeat_input():
 		repeat_timer(.15)
 # Manages the timer for movement
 func repeat_timer(time:float) -> void:
-	var timer: Timer = self.get_node("%Move_Timer")
+	var timer: Timer = $%Move_Timer
 	if !timer.timeout.is_connected(_on_repeat_input):
 		timer.timeout.connect(_on_repeat_input)
 	timer.wait_time = time
 	timer.start()
 
 func update_location() -> void:
-	var locations:Array = get_node("%Areas").get_children()
+	var locations:Array = $%Areas.get_children()
 	var current_room: String = "Doorway"
 	for room: Area2D in locations:
 		var rect: Rect2 = room.get_child(0).shape.get_rect()
