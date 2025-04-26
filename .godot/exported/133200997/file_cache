@@ -1,0 +1,9 @@
+res://game.tscn::68af3602ef8ecee0e667bfb131290e12::1745675221::res://.godot/exported/133200997/export-609f762188a68253d349ec58c4f3a8d3-game.scn
+res://map.tscn::45eee6a33206468cf1805762ce7a80bd::1745675220::res://.godot/exported/133200997/export-e6d97c4feb736ad10c0d43b3f8310ea4-map.scn
+res://menu_theme.tres::0f648dba28be9f2f3b08e7321af5af1d::1745523632::res://.godot/exported/133200997/export-4180e58dd9b297852815d3d1dc5a7e6a-menu_theme.res
+res://player.tscn::fcba20ff7a7833043c77df001b88acf8::1745675220::res://.godot/exported/133200997/export-36a25e342948d0ceacc500772b5412b3-player.scn
+res://Taffer_Tile_Set.tres::6830a9b2d6d0806d812bd746d35576e2::1745669633::res://.godot/exported/133200997/export-7fd00d74edb729e5e3fec29b15774a1c-Taffer_Tile_Set.res
+res://menu_scenes/game_end.tscn::da8d49f547b26d5c3445f80784b676d4::1745675221::res://.godot/exported/133200997/export-7185430b9fd8d5d1007c21c78f94237e-game_end.scn
+res://menu_scenes/main_menu.tscn::bb5aa25822535d0406724607127bb0f3::1745675221::res://.godot/exported/133200997/export-f4aa7014ffe0bb72c952781ea8ba49f2-main_menu.scn
+res://menu_scenes/menu_base.tscn::0b3d19d89a393ff59115ca9cad7a9226::1745675221::res://.godot/exported/133200997/export-93708c5167562a7136aaa975337c6a48-menu_base.scn
+res://menu_scenes/pause_menu.tscn::c8533136057136757ae3faffbcc5414c::1745675221::res://.godot/exported/133200997/export-0f91460ce49456c176939005040ff2e3-pause_menu.scn

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmsnywjwx4480"]
+
+[ext_resource type="PackedScene" uid="uid://ndkajbnv7bie" path="res://menu_scenes/menu_base.tscn" id="1_8kid2"]
+
+[node name="MainMenu" instance=ExtResource("1_8kid2")]
+size_flags_vertical = 4
+
+[node name="Title" parent="." index="0"]
+text = "The Demom"

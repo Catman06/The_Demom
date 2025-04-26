@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://holnjecmi170"]
+
+[ext_resource type="PackedScene" uid="uid://ndkajbnv7bie" path="res://menu_scenes/menu_base.tscn" id="1_hdmo1"]
+
+[node name="PauseMenu" instance=ExtResource("1_hdmo1")]
+
+[node name="Title" parent="." index="0"]
+text = "PAUSED"
+
+[node name="StartButton" parent="Controls" index="0"]
+text = "Resume"

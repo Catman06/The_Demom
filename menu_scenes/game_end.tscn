@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b74nk12geioaf"]
+
+[ext_resource type="PackedScene" uid="uid://ndkajbnv7bie" path="res://menu_scenes/menu_base.tscn" id="1_ptjbc"]
+
+[node name="EndScreen" instance=ExtResource("1_ptjbc")]
+offset_left = -147.5
+offset_right = 147.5
+
+[node name="Title" parent="." index="0"]
+text = "You {winlose}"
+
+[node name="StartButton" parent="Controls" index="0"]
+text = "Restart"
