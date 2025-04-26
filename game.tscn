@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://dhqmxburisura"]
+[gd_scene load_steps=22 format=4 uid="uid://dhqmxburisura"]
 
 [ext_resource type="PackedScene" uid="uid://c8h8jb7nr5v21" path="res://map.tscn" id="1_e2o6t"]
 [ext_resource type="Script" uid="uid://bc5w33wvctxal" path="res://scripts/game.gd" id="1_fc0e3"]
@@ -51,6 +51,12 @@ corner_detail = 4
 content_margin_top = 10.0
 content_margin_bottom = 40.0
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vef74"]
+atlas = ExtResource("2_7jktm")
+region = Rect2(200, 220, 18, 16)
+margin = Rect2(0, 2, 2, 4)
+filter_clip = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eow3j"]
 shader = ExtResource("3_ryrav")
@@ -281,8 +287,26 @@ size_flags_vertical = 3
 allow_search = false
 auto_height = true
 
+[node name="PauseButton" type="Button" parent="UI/Game"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.97869
+anchor_top = 0.0123457
+anchor_right = 0.97869
+anchor_bottom = 0.0123457
+offset_left = -28.0
+offset_bottom = 28.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+action_mode = 0
+icon = SubResource("AtlasTexture_vef74")
+metadata/_edit_use_anchors_ = true
+
 [node name="Menu" type="Control" parent="UI"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -320,6 +344,7 @@ layout_mode = 1
 [connection signal="demom_touch" from="Game/Player" to="." method="_on_player_demom_touch"]
 [connection signal="item_pickup" from="Game/Player" to="." method="_on_player_item_pickup"]
 [connection signal="location_update" from="Game/Player" to="." method="_on_player_location_update"]
+[connection signal="pressed" from="UI/Game/PauseButton" to="." method="_on_pause"]
 [connection signal="pressed" from="UI/Menu/EndScreen/Controls/StartButton" to="." method="_on_start"]
 [connection signal="pressed" from="UI/Menu/MainMenu/Controls/StartButton" to="." method="_on_start"]
 [connection signal="pressed" from="UI/Menu/PauseMenu/Controls/StartButton" to="." method="_on_unpause"]

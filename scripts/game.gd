@@ -66,6 +66,7 @@ func update_goal_display() -> void:
 
 	# Create a copy of 'goals' that replaces the bool with symbols
 	var symbol_goals: Dictionary = goals.duplicate()
+	# Replace the boolean state of the keys with filled or unfilled boxes for display
 	for key in symbol_goals:
 		if symbol_goals[key]:
 			symbol_goals[key] = "▣"
@@ -97,10 +98,15 @@ func winlose(win: bool) -> void:
 # Pause the game
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		get_tree().paused = true
-		get_node("%Menu").visible = true
-		get_node("%PauseMenu").visible = true
+		_on_pause()
 
+func _on_pause() -> void:
+	# If on another menu, do nothing
+	if get_node("%Menu").visible:
+		return
+	get_tree().paused = true
+	get_node("%Menu").visible = true
+	get_node("%PauseMenu").visible = true
 
 func _on_unpause() -> void:
 	get_tree().paused = false
