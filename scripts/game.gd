@@ -4,6 +4,7 @@ extends Node
 @export var goal_display:RichTextLabel = null
 @export var itemlist: ItemList = null
 @export var item2icon: Dictionary = {"book":Vector2i(15,15), "photo":Vector2i(8,14), "necklace":Vector2i(15,3), "mirror":Vector2i(6,10), "salt":Vector2i(11,0), "tenderizer":Vector2i(13,0)}
+@export var item_display_name: Dictionary = {"book":"Demonology Book","photo":"Family Photo","necklace":"Grandmother's Necklace","mirror":"Hand Mirror", "salt":"Salt", "tenderizer":"Meat Tenderizer"}
 @export var icon_atlas: AtlasTexture = null
 
 @onready var fog_start: PackedByteArray = get_node("%Map/Fog").tile_map_data
@@ -51,7 +52,7 @@ func _on_player_item_pickup(item:String) -> void:
 	icon.atlas = icon_atlas
 	icon.region = Rect2(item2icon.get(item)*20, Vector2(20,20))
 	icon.filter_clip = true
-	itemlist.add_item(item, icon)
+	itemlist.add_item(item_display_name[item], icon)
 
 # Display the goals and their completion status
 func update_goal_display() -> void:
