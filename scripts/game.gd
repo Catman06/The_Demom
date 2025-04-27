@@ -7,7 +7,6 @@ extends Node
 @export var item_display_name: Dictionary = {"book":"Demonology Book","photo":"Family Photo","necklace":"Grandmother's Necklace","mirror":"Hand Mirror", "salt":"Salt", "tenderizer":"Meat Tenderizer"}
 @export var icon_atlas: AtlasTexture = null
 
-@onready var fog_start: PackedByteArray =$%Map/Fog.tile_map_data
 @onready var map_start: PackedByteArray =$%Map.tile_map_data
 
 signal play_sound(path: String) 
@@ -35,8 +34,10 @@ signal start_game()
 func _on_start() -> void:
 	# Reset
 	$%EndScreen.visible = false
-	$%Map/Fog.tile_map_data = fog_start
+	$%Game.visible = false
+	$%UI/Game.visible = false
 	$%Map.tile_map_data = map_start
+	reset_fog()
 	for goal in goals:
 		goals[goal] = false
 	itemlist.clear()
@@ -56,6 +57,13 @@ func _on_start() -> void:
 	emit_signal("start_game")
 	$%Camera.make_current()
 	update_goal_display()
+
+func reset_fog() -> void:
+	var tile_array: Array[Vector2i] = $%Map.get_used_cells()
+	$%Map/Fog.clear()
+	for tile in tile_array:
+		$%Map/Fog.set_cell(tile, 1, Vector2i(11,13))
+
 
 # Set the shown location when the player updates it
 func _on_player_location_update(current_room:String) -> void:
