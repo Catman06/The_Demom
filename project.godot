@@ -11,14 +11,10 @@ config_version=5
 [application]
 
 config/name="The Demom"
-config/version="1.1.1"
+config/version="1.2.0"
 run/main_scene="uid://dhqmxburisura"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
-
-[dotnet]
-
-project/assembly_name="Nadia_Text_Adventure"
 
 [input]
 
