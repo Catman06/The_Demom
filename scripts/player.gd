@@ -48,7 +48,7 @@ func move(direction: int) -> void:
 	# Reveal all that should be visible
 	Reveal.reveal(ray, map, $%Map/Fog)
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("left"):
 		move(Direction.LEFT)
 		last_direction = "left"

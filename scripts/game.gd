@@ -16,22 +16,39 @@ func _ready() -> void:
 	$%MainMenu.visible = true
 	$%Game.visible = false
 	$%UI/Game.visible = false
+	$%OpeningText.visible = false
+
+signal anykey()
+func _input(event: InputEvent) -> void:
+	# If while the opening text is visible, a key is pressed emit "anykey"
+	if $%OpeningText.visible && event is InputEventKey:
+		print("Game")
+		emit_signal("anykey")
+	if event.is_action_pressed("pause"):
+		_on_pause()
 
 # Reset everything (to allow restart) and start the game
 signal start_game()
 func _on_start() -> void:
 	# Reset
+	$%EndScreen.visible = false
 	$%Map/Fog.tile_map_data = fog_start
 	$%Map.tile_map_data = map_start
 	for goal in goals:
 		goals[goal] = false
 	itemlist.clear()
 
+
+	# Show opening text until something is pressed
+	$%MainMenu.visible = false
+	$%OpeningText.visible = true
+	await self.anykey
+
 	# Start
+	$%OpeningText.visible = false
 	$%Game.visible = true
 	$%UI/Game.visible = true
 	$%Menu.visible = false
-	$%MainMenu.visible = false
 	get_tree().paused = false
 	emit_signal("start_game")
 	$%Camera.make_current()
@@ -96,10 +113,6 @@ func winlose(win: bool) -> void:
 	$%EndScreen.visible = true
 
 # Pause the game
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):
-		_on_pause()
-
 func _on_pause() -> void:
 	# If on another menu, do nothing
 	if $%Menu.visible:

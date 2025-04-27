@@ -36,11 +36,13 @@ theme = ExtResource("1_lti8b")
 [node name="StartButton" type="Button" parent="Controls"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_lti8b")
 text = "Start"
 
 [node name="SettingsButton" type="MenuButton" parent="Controls"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_lti8b")
 text = "Setting"
 flat = false
@@ -50,6 +52,7 @@ popup/item_0/id = 0
 
 [node name="QuitButton" type="Button" parent="Controls"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_lti8b")
 text = "Quit"
 script = ExtResource("2_ouk20")

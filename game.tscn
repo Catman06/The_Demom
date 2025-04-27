@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://dhqmxburisura"]
+[gd_scene load_steps=23 format=4 uid="uid://dhqmxburisura"]
 
 [ext_resource type="PackedScene" uid="uid://c8h8jb7nr5v21" path="res://map.tscn" id="1_e2o6t"]
 [ext_resource type="Script" uid="uid://bc5w33wvctxal" path="res://scripts/game.gd" id="1_fc0e3"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b74nk12geioaf" path="res://menu_scenes/game_end.tscn" id="4_eow3j"]
 [ext_resource type="PackedScene" uid="uid://dmsnywjwx4480" path="res://menu_scenes/main_menu.tscn" id="5_vef74"]
 [ext_resource type="PackedScene" uid="uid://holnjecmi170" path="res://menu_scenes/pause_menu.tscn" id="6_hve3p"]
+[ext_resource type="PackedScene" uid="uid://cmfxunqpgso8r" path="res://menu_scenes/opening_text.tscn" id="10_hve3p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fc0e3"]
 atlas = ExtResource("2_7jktm")
@@ -82,6 +83,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Game" type="Node2D" parent="."]
@@ -203,6 +205,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
+mouse_filter = 2
 
 [node name="ColorRect" type="ColorRect" parent="UI/Game"]
 layout_mode = 1
@@ -306,7 +309,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Menu" type="Control" parent="UI"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -315,6 +317,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="BlurBackground" type="ColorRect" parent="UI/Menu"]
 material = SubResource("ShaderMaterial_eow3j")
@@ -324,20 +327,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.784314)
 
 [node name="EndScreen" parent="UI/Menu" instance=ExtResource("4_eow3j")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
+mouse_filter = 2
 
 [node name="MainMenu" parent="UI/Menu" instance=ExtResource("5_vef74")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
+mouse_filter = 2
 
 [node name="PauseMenu" parent="UI/Menu" instance=ExtResource("6_hve3p")]
 unique_name_in_owner = true
 visible = false
+layout_mode = 1
+mouse_filter = 2
+
+[node name="OpeningText" parent="UI/Menu" instance=ExtResource("10_hve3p")]
+unique_name_in_owner = true
 layout_mode = 1
 
 [connection signal="start_game" from="." to="Game/Player" method="_on_start"]
@@ -352,3 +364,4 @@ layout_mode = 1
 [editable path="UI/Menu/EndScreen"]
 [editable path="UI/Menu/MainMenu"]
 [editable path="UI/Menu/PauseMenu"]
+[editable path="UI/Menu/OpeningText"]
