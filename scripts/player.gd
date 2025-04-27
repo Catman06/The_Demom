@@ -10,17 +10,22 @@ var Reveal = RevealTiles.new()
 
 @onready var ray = self.get_child(0)
 @onready var location: Vector2i
+# Whether or not to allow movement to be performed. Keeps the player from moving on game start
+var allow_move: bool = false
 
 signal item_pickup(item: String)
 signal demom_touch(location: Vector2i)
 signal location_update(current_room: String)
 
-# When the game starts, place the player in their starting position and reveal (The timer just allows everything else to unpause before scanning, I think it doesn't work without it)
+# When the game starts, place the player in their starting position and reveal (The timer just allows everything else to unpause before scanning, I think, it doesn't work without it)
 func _on_start() -> void:
+	allow_move = false
 	location = Vector2i(start_x, start_y)
 	self.global_position = location * 20
 	await get_tree().create_timer(.01).timeout
 	Reveal.reveal(ray, map, $%Map/Fog)
+	allow_move = true
+	
 
 # Movement
 ## Enum defining possible movement directions
@@ -49,19 +54,19 @@ func move(direction: int) -> void:
 	Reveal.reveal(ray, map, $%Map/Fog)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("left"):
+	if allow_move && event.is_action_pressed("left"):
 		move(Direction.LEFT)
 		last_direction = "left"
 		repeat_timer(.35)
-	if event.is_action_pressed("right"):
+	if allow_move && event.is_action_pressed("right"):
 		move(Direction.RIGHT)
 		last_direction = "right"
 		repeat_timer(.35)
-	if event.is_action_pressed("up"):
+	if allow_move && event.is_action_pressed("up"):
 		move(Direction.UP)
 		last_direction = "up"
 		repeat_timer(.35)
-	if event.is_action_pressed("down"):
+	if allow_move && event.is_action_pressed("down"):
 		move(Direction.DOWN)
 		last_direction = "down"
 		repeat_timer(.35)
