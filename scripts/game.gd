@@ -10,6 +10,8 @@ extends Node
 @onready var fog_start: PackedByteArray =$%Map/Fog.tile_map_data
 @onready var map_start: PackedByteArray =$%Map.tile_map_data
 
+signal play_sound(path: String) 
+
 func _ready() -> void:
 	get_tree().paused = true
 	$%Menu.visible = true
@@ -17,6 +19,7 @@ func _ready() -> void:
 	$%Game.visible = false
 	$%UI/Game.visible = false
 	$%OpeningText.visible = false
+	connect_buttons()
 
 signal anykey()
 func _input(event: InputEvent) -> void:
@@ -69,6 +72,8 @@ func _on_player_item_pickup(item:String) -> void:
 	icon.region = Rect2(item2icon.get(item)*20, Vector2(20,20))
 	icon.filter_clip = true
 	itemlist.add_item(item_display_name[item], icon)
+	# Play pickup sound
+	emit_signal("play_sound", "res://resources/pickup.wav")
 
 # Display the goals and their completion status
 func update_goal_display() -> void:
@@ -99,8 +104,10 @@ func _on_player_demom_touch(location) -> void:
 		goals["exorcism"] = true
 		update_goal_display()
 		winlose(true)
+		emit_signal("play_sound", "res://resources/victory_riff.wav")
 	else:
 		winlose(false)
+		emit_signal("play_sound", "res://resources/lose.wav")
 
 # Display the correct end screen message
 func winlose(win: bool) -> void:
@@ -125,3 +132,20 @@ func _on_unpause() -> void:
 	get_tree().paused = false
 	$%Menu.visible = false
 	$%PauseMenu.visible = false
+
+## Sounds
+# Connect the signals of the buttons in inheritors of menu_base
+func connect_buttons() -> void:
+	for menu in ["EndScreen", "MainMenu", "PauseMenu"]:
+		for button: BaseButton in get_node(NodePath("%%%s/Controls" % menu)).get_children():
+			button.mouse_entered.connect(_on_hover)
+			button.button_down.connect(_on_button_down)
+
+
+# On hover over menu option play sound
+func _on_hover() -> void:
+	emit_signal("play_sound","res://resources/hover.wav")
+
+# On clicking a button play sound
+func _on_button_down() -> void:
+	emit_signal("play_sound","res://resources/click.wav")

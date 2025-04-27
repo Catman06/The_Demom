@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://dhqmxburisura"]
+[gd_scene load_steps=25 format=4 uid="uid://dhqmxburisura"]
 
 [ext_resource type="PackedScene" uid="uid://c8h8jb7nr5v21" path="res://map.tscn" id="1_e2o6t"]
 [ext_resource type="Script" uid="uid://bc5w33wvctxal" path="res://scripts/game.gd" id="1_fc0e3"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dmsnywjwx4480" path="res://menu_scenes/main_menu.tscn" id="5_vef74"]
 [ext_resource type="PackedScene" uid="uid://holnjecmi170" path="res://menu_scenes/pause_menu.tscn" id="6_hve3p"]
 [ext_resource type="PackedScene" uid="uid://cmfxunqpgso8r" path="res://menu_scenes/opening_text.tscn" id="10_hve3p"]
+[ext_resource type="Script" uid="uid://bqlocho2tyon3" path="res://scripts/audio.gd" id="11_mfdv2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fc0e3"]
 atlas = ExtResource("2_7jktm")
@@ -62,6 +63,8 @@ filter_clip = true
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eow3j"]
 shader = ExtResource("3_ryrav")
 shader_parameter/lod = 4.0
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_mfdv2"]
 
 [node name="Main" type="Node" node_paths=PackedStringArray("goal_display", "itemlist")]
 process_mode = 3
@@ -354,10 +357,20 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamPolyphonic_mfdv2")
+volume_db = -1.0
+max_polyphony = 4
+script = ExtResource("11_mfdv2")
+
+[connection signal="play_sound" from="." to="AudioPlayer" method="_on_play_sound"]
 [connection signal="start_game" from="." to="Game/Player" method="_on_start"]
 [connection signal="demom_touch" from="Game/Player" to="." method="_on_player_demom_touch"]
 [connection signal="item_pickup" from="Game/Player" to="." method="_on_player_item_pickup"]
 [connection signal="location_update" from="Game/Player" to="." method="_on_player_location_update"]
+[connection signal="button_down" from="UI/Game/PauseButton" to="." method="_on_button_down"]
+[connection signal="mouse_entered" from="UI/Game/PauseButton" to="." method="_on_hover"]
 [connection signal="pressed" from="UI/Game/PauseButton" to="." method="_on_pause"]
 [connection signal="pressed" from="UI/Menu/EndScreen/Controls/StartButton" to="." method="_on_start"]
 [connection signal="pressed" from="UI/Menu/MainMenu/Controls/StartButton" to="." method="_on_start"]
