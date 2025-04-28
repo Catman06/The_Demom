@@ -7,6 +7,8 @@ var Reveal = RevealTiles.new()
 @export var start_x: int = 7
 @export var start_y: int = 15
 @export var map: TileMapLayer = null
+var code_array: PackedStringArray = ["","","","","","","","","","",""]
+var valid_code: PackedStringArray = ["Enter","A","B","Right","Left","Right","Left","Down","Down","Up","Up"]
 
 @onready var ray = self.get_child(0)
 @onready var location: Vector2i
@@ -53,6 +55,7 @@ func move(direction: int) -> void:
 	# Reveal all that should be visible
 	Reveal.reveal(ray, map, $%Map/Fog)
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	if allow_move && event.is_action_pressed("left"):
 		move(Direction.LEFT)
@@ -70,6 +73,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		move(Direction.DOWN)
 		last_direction = "down"
 		repeat_timer(.35)
+	# Add the key input to code_array
+	if !(event is InputEventKey and event.pressed):
+		return
+	code_array.resize(10)
+	code_array.insert(0,event.as_text())
+	print_debug(code_array)
+	if code_array == valid_code:
+		debug_tp()
 
 ## The last moved last_direction. Used for held-key movement
 var last_direction:String = ""
@@ -103,3 +114,10 @@ func update_location() -> void:
 			break
 	# Set the shown location
 	emit_signal("location_update", current_room)
+
+func debug_tp() -> void:
+	print_debug("tp")
+	var tp_tile = map.local_to_map(map.to_local($%DebugTP.position))
+	location = tp_tile
+	self.global_position = tp_tile * 20
+	Reveal.reveal(ray, map, $%Map/Fog)

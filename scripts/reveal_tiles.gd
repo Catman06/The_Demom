@@ -28,7 +28,7 @@ func cast(ray: RayCast2D, map: TileMapLayer, fog: TileMapLayer) -> void:
 		## The point 1 further along the path of the ray
 		var next_point = ray.get_collision_point() + (ray.target_position.normalized())
 		## How many scans further to go once finding a wall
-		var stop: int = 10
+		var stop: int = 5
 		while true:
 			## The tile that "next_point" is in
 			var next_tile = map.local_to_map(map.to_local(next_point))
@@ -36,17 +36,17 @@ func cast(ray: RayCast2D, map: TileMapLayer, fog: TileMapLayer) -> void:
 			# If a tile isn't null and is a wall, scan "stop" more times, then stop
 			if !map.get_cell_tile_data(next_tile) == null && map.get_cell_tile_data(next_tile).get_custom_data("Occlude"):
 				fog.erase_cell(map.local_to_map(map.to_local(next_point)))
-				next_point += (ray.target_position.normalized())
+				next_point += (ray.target_position.normalized() * 2)
 				if stop == 0:
 					break
 				stop -= 1
 				continue
 			# If the tile is null, just keep scanning
 			elif map.get_cell_tile_data(next_tile) == null:
-				next_point += (ray.target_position.normalized())
+				next_point += (ray.target_position.normalized() * 10)
 			# If the tile isn't null, and isn't a wall, erase any fog on the tile, and keep scanning
 			elif !map.get_cell_tile_data(next_tile) == null && !map.get_cell_tile_data(next_tile).get_custom_data("Occlude"):
 				if !fog.get_cell_tile_data(next_tile) == null:
 					fog.erase_cell(next_tile)
-				next_point += (ray.target_position.normalized())
+				next_point += (ray.target_position.normalized() * 4)
 			

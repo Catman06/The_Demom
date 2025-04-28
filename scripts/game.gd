@@ -55,7 +55,6 @@ func _on_start() -> void:
 	$%Menu.visible = false
 	get_tree().paused = false
 	emit_signal("start_game")
-	$%Camera.make_current()
 	update_goal_display()
 
 func reset_fog() -> void:
