@@ -82,7 +82,6 @@ func scan(start_tile: Vector2i, octant: int, radius: float = 12.5, start_col:int
 			# Check if the tile is occupied
 			var tile_blocked:bool = false
 			if map.get_cell_source_id(head_tile) >= 0 && map.get_cell_tile_data(head_tile).get_custom_data("Occlude"):
-				print("blocked")
 				tile_blocked = true
 
 			if prev_blocked:

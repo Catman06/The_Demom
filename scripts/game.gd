@@ -79,7 +79,7 @@ func _on_player_item_pickup(item:String) -> void:
 	icon.filter_clip = true
 	itemlist.add_item(item_display_name[item], icon)
 	# Play pickup sound
-	emit_signal("play_sound", "res://resources/pickup.wav")
+	emit_signal("play_sound", ResourceLoader.load("res://resources/pickup.wav"))
 
 # Display the goals and their completion status
 func update_goal_display() -> void:
@@ -110,10 +110,10 @@ func _on_player_demom_touch(location) -> void:
 		goals["exorcism"] = true
 		update_goal_display()
 		winlose(true)
-		emit_signal("play_sound", "res://resources/victory_riff.wav")
+		emit_signal("play_sound", ResourceLoader.load("res://resources/victory_riff.wav"))
 	else:
 		winlose(false)
-		emit_signal("play_sound", "res://resources/lose.wav")
+		emit_signal("play_sound", ResourceLoader.load("res://resources/lose.wav"))
 
 # Display the correct end screen message
 func winlose(win: bool) -> void:
@@ -150,8 +150,9 @@ func connect_buttons() -> void:
 
 # On hover over menu option play sound
 func _on_hover() -> void:
-	emit_signal("play_sound","res://resources/hover.wav")
+	
+	emit_signal("play_sound",ResourceLoader.load("res://resources/hover.wav"))
 
 # On clicking a button play sound
 func _on_button_down() -> void:
-	emit_signal("play_sound","res://resources/click.wav")
+	emit_signal("play_sound",ResourceLoader.load("res://resources/click.wav"))
