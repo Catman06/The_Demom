@@ -24,7 +24,6 @@ signal anykey()
 func _input(event: InputEvent) -> void:
 	# If while the opening text is visible, a key is pressed emit "anykey"
 	if $%OpeningText.visible && event is InputEventKey:
-		print("Game")
 		emit_signal("anykey")
 	if event.is_action_pressed("pause"):
 		_on_pause()

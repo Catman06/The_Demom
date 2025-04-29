@@ -9,5 +9,4 @@ func _ready() -> void:
 
 func _on_play_sound(path:String) -> void:
 	var new_stream = AudioStreamWAV.load_from_file(path)
-	print_debug("Playing file: %s" % path)
 	poly_stream.play_stream(new_stream)

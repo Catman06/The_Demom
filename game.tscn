@@ -110,6 +110,12 @@ process_mode = 1
 top_level = true
 occlusion_enabled = false
 
+[node name="Visible" type="TileMapLayer" parent="Game/Map"]
+modulate = Color(1, 1, 1, 0.196078)
+z_index = 2
+tile_set = ExtResource("4_7jktm")
+collision_enabled = false
+
 [node name="Fog" type="TileMapLayer" parent="Game/Map"]
 modulate = Color(0, 0, 0, 1)
 z_index = 2
@@ -309,6 +315,14 @@ action_mode = 0
 icon = SubResource("AtlasTexture_vef74")
 metadata/_edit_use_anchors_ = true
 
+[node name="AngleCount" type="Label" parent="UI/Game"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 7.0
+offset_top = 9.0
+offset_right = 111.0
+offset_bottom = 32.0
+
 [node name="Menu" type="Control" parent="UI"]
 unique_name_in_owner = true
 visible = false
@@ -365,7 +379,7 @@ script = ExtResource("11_mfdv2")
 
 [node name="DebugTP" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(389, 351)
+position = Vector2(126, 701)
 
 [connection signal="play_sound" from="." to="AudioPlayer" method="_on_play_sound"]
 [connection signal="start_game" from="." to="Game/Player" method="_on_start"]

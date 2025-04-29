@@ -1,5 +1,14 @@
 extends Sprite2D
-var Reveal = RevealTiles.new()
+var Reveal = RevealTilesV2.new()
+
+##DEBUG
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("anglecountup"):
+		Reveal.angle_count += 100
+		$%AngleCount.text = String("Angles: %s" % Reveal.angle_count)
+	if event.is_action_pressed("anglecountdown"):
+		Reveal.angle_count -= 100
+		$%AngleCount.text = String("Angles: %s" % Reveal.angle_count)
 
 # The script for handling everything related to the player
 # Handles movement and inventory
@@ -25,7 +34,7 @@ func _on_start() -> void:
 	location = Vector2i(start_x, start_y)
 	self.global_position = location * 20
 	await get_tree().create_timer(.01).timeout
-	Reveal.reveal(ray, map, $%Map/Fog)
+	Reveal.reveal(self, map, $%Map/Fog, $%Map/Visible)
 	allow_move = true
 	
 
@@ -53,7 +62,7 @@ func move(direction: int) -> void:
 	self.global_position = location * 20
 	update_location()
 	# Reveal all that should be visible
-	Reveal.reveal(ray, map, $%Map/Fog)
+	Reveal.reveal(self, map, $%Map/Fog, $%Map/Visible)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -78,7 +87,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	code_array.resize(10)
 	code_array.insert(0,event.as_text())
-	print_debug(code_array)
 	if code_array == valid_code:
 		debug_tp()
 
@@ -120,4 +128,4 @@ func debug_tp() -> void:
 	var tp_tile = map.local_to_map(map.to_local($%DebugTP.position))
 	location = tp_tile
 	self.global_position = tp_tile * 20
-	Reveal.reveal(ray, map, $%Map/Fog)
+	Reveal.reveal(self, map, $%Map/Fog, $%Map/Visible)
